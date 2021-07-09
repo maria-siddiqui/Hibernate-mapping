@@ -9,44 +9,38 @@ import org.hibernate.cfg.Configuration;
 public class Mapping {
 public static void main(String[] args) {
 	
-	//Laptop laptop = new Laptop();
+	Laptop laptop = new Laptop();
+	Laptop laptop2 = new Laptop();
 	
-//	laptop.setLid(103);
-//	laptop.setLname("Toshiba");
+	Student s = new Student();
+	Student s2 = new Student();
 	
-//	Student s = new Student();
-//	s.setRollNo(99);
-//	s.setName("Affan");
-//	s.setMarks(70);
-//	s.setLap(laptop); //for one to one, student gets laptop object
-//	s.getLap().add(laptop); //for one to many and also for many to many, student gets laptop from the arraylist of laptop objects
-//	s.getLap().add(laptop2);
-	
+	laptop.setLname("dell");
+	laptop2.setLname("hp");
 //	laptop.setStudent(s); // for many to one , laptop gets student object
-//	laptop.getStudent().add(s); //for many to many, laptop gets student from the arraylist of student object
+	laptop.getStudent().add(s); //for many to many, laptop gets student from the arraylist of student object
+	laptop2.getStudent().add(s);
+	laptop.getStudent().add(s2);
+	laptop2.getStudent().add(s2); 
+	
+	s.setName("sana");
+	s.setMarks(79);
+	s2.setName("maria");
+	s2.setMarks(69);
+//	s.setLap(laptop); //for one to one, student gets laptop object
+	s.getLap().add(laptop); //for one to many and also for many to many, student gets laptop from the arraylist of laptop objects
+	s.getLap().add(laptop2);
+	s2.getLap().add(laptop);
+	s2.getLap().add(laptop2);
 	
 	Configuration config = new Configuration().configure("mapping.cfg.xml").addAnnotatedClass(Student.class).addAnnotatedClass(Laptop.class);
 	SessionFactory sf = config.buildSessionFactory();
 	Session session = sf.openSession();
 	Transaction tx = session.beginTransaction();
-	//session.save(s);
-//	session.save(laptop);
-//	session.save(laptop2); 
-	Laptop laptop,laptop1 = new Laptop();
-	//laptop=(Laptop)session.get(Laptop.class, 47); //fetching data from database
-	laptop1=(Laptop)session.get(Laptop.class, 48); //fetching data from database
-
-// is mai wo laptop ajaega dell wala
-	Student student= new Student();
-	student=(Student)session.get(Student.class, 48);
-	// is mai usman
-	List<Laptop> laptops = new ArrayList<>();
-	//laptops.add(laptop)
-	laptops.add(laptop1);
-	//jo oopr laptop fetch kiya wo is list mai dala, now is list ko student mai
-	student.setLaptops(laptops);
-	session.save(student);
+	session.save(s);
+	session.save(s2);
+	session.save(laptop);
+	session.save(laptop2);
 	tx.commit();
-	
 	}
 }
