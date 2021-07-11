@@ -1,7 +1,9 @@
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,41 +11,34 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 @Entity
-public class Laptop {
-	
+public class Course {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO) 
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	private String name;
-	private int model;
+	private int creditHrs;
 	
-	public void createLaptop(int model, String name) {
-		Laptop laptop = new Laptop();
-		laptop.setName(name);
-		laptop.setModel(model);
+	@ManyToOne  
+	private Student student;
+
+	public void createCourse(String name, int creditHrs, long studentId) {
 		Configuration config = new Configuration().configure("mapping.cfg.xml").addAnnotatedClass(Student.class).addAnnotatedClass(Contact.class).addAnnotatedClass(Laptop.class).addAnnotatedClass(Project.class);
 		SessionFactory sf = config.buildSessionFactory();
 		Session session = sf.openSession();
 		Transaction tx = session.beginTransaction();
-		session.save(laptop);
+		Course course= new Course();
+		Student student = new Student();
+		course.setStudent(student.getStudent(studentId));
+		//Student student=(Student)session.get(Student.class, studentId); //fetching data from database
+	//	course.setStudent(student);
+		course.setName(name);
+		course.setCreditHrs(creditHrs);
+		session.save(course);
 		tx.commit();
 		session.close();
 		sf.close();
 	}
 	
-	public Laptop getLaptop(long id) {
-		Laptop laptop = new Laptop();
-		Configuration config = new Configuration().configure("mapping.cfg.xml").addAnnotatedClass(Student.class).addAnnotatedClass(Contact.class).addAnnotatedClass(Laptop.class).addAnnotatedClass(Project.class);
-		SessionFactory sf = config.buildSessionFactory();
-		Session session = sf.openSession();
-		Transaction tx = session.beginTransaction();
-		laptop=(Laptop)session.get(Laptop.class, id);
-		tx.commit();
-		session.close();
-		sf.close();
-		return laptop;
-	}
-		
 	public long getId() {
 		return id;
 	}
@@ -60,15 +55,21 @@ public class Laptop {
 		this.name = name;
 	}
 
-	public int getModel() {
-		return model;
+	public int getCreditHrs() {
+		return creditHrs;
 	}
 
-	public void setModel(int model) {
-		this.model = model;
+	public void setCreditHrs(int creditHrs) {
+		this.creditHrs = creditHrs;
+	}
+
+	public Student getStudent() {
+		return student;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
 	}
 	
 	
-	
-
 }

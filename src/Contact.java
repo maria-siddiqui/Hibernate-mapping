@@ -17,11 +17,11 @@ public class Contact {
 	private double cellNum;
 	private String address;
 	
-	public void createContact(int cellNum, String address) {
+	public void createContact(double cellNum, String address) {
 		Contact contact = new Contact();
 		contact.setCellNum(cellNum);
 		contact.setAddress(address);
-		Configuration config = new Configuration().configure("mapping.cfg.xml").addAnnotatedClass(Student.class).addAnnotatedClass(Contact.class).addAnnotatedClass(Laptop.class);
+		Configuration config = new Configuration().configure("mapping.cfg.xml").addAnnotatedClass(Student.class).addAnnotatedClass(Contact.class).addAnnotatedClass(Laptop.class).addAnnotatedClass(Project.class);
 		SessionFactory sf = config.buildSessionFactory();
 		Session session = sf.openSession();
 		Transaction tx = session.beginTransaction();
@@ -33,7 +33,7 @@ public class Contact {
 	
 	public Contact getContact(long id) {
 		Contact contact = new Contact();
-		Configuration config = new Configuration().configure("mapping.cfg.xml").addAnnotatedClass(Student.class).addAnnotatedClass(Contact.class).addAnnotatedClass(Laptop.class);
+		Configuration config = new Configuration().configure("mapping.cfg.xml").addAnnotatedClass(Student.class).addAnnotatedClass(Contact.class).addAnnotatedClass(Laptop.class).addAnnotatedClass(Project.class);
 		SessionFactory sf = config.buildSessionFactory();
 		Session session = sf.openSession();
 		Transaction tx = session.beginTransaction();
@@ -46,7 +46,7 @@ public class Contact {
 	
 	public void updateContact(long id, String address, double cellNum) {
 		Contact contact = new Contact();
-		Configuration config = new Configuration().configure("mapping.cfg.xml").addAnnotatedClass(Student.class).addAnnotatedClass(Contact.class).addAnnotatedClass(Laptop.class);
+		Configuration config = new Configuration().configure("mapping.cfg.xml").addAnnotatedClass(Student.class).addAnnotatedClass(Contact.class).addAnnotatedClass(Laptop.class).addAnnotatedClass(Project.class);
 		SessionFactory sf = config.buildSessionFactory();
 		Session session = sf.openSession();
 		Transaction tx = session.beginTransaction();
@@ -64,7 +64,7 @@ public class Contact {
 
 	public void deleteContact(long id) {
 		Contact contact = new Contact();
-		Configuration config = new Configuration().configure("mapping.cfg.xml").addAnnotatedClass(Student.class).addAnnotatedClass(Contact.class).addAnnotatedClass(Laptop.class);
+		Configuration config = new Configuration().configure("mapping.cfg.xml").addAnnotatedClass(Student.class).addAnnotatedClass(Contact.class).addAnnotatedClass(Laptop.class).addAnnotatedClass(Project.class);
 		SessionFactory sf = config.buildSessionFactory();
 		Session session = sf.openSession();
 		Transaction tx = session.beginTransaction();
