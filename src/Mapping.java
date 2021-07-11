@@ -1,46 +1,36 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-
 public class Mapping {
 public static void main(String[] args) {
 	
-	Laptop laptop = new Laptop();
+	//CRUD Operations of Contact model
+//	Contact contact = new Contact();
+//	contact.createContact(1234,"fb area");
+//	contact.deleteContact(2l);
+//	contact = contact.getContact(2l);
+//	contact.updateContact(2l, "block2", 343d);
+	
+	// Retrieving laptops from database
+	Laptop laptop1 = new Laptop();
 	Laptop laptop2 = new Laptop();
+	laptop1 = laptop1.getLaptop(14l);
+	laptop2 = laptop2.getLaptop(15l);
 	
-	Student s = new Student();
-	Student s2 = new Student();
+	// Adding both laptops in list
+	List<Laptop> laptops = new ArrayList<>();
+	laptops.add(laptop2);
+	laptops.add(laptop1);
 	
-	laptop.setLname("dell");
-	laptop2.setLname("hp");
-//	laptop.setStudent(s); // for many to one , laptop gets student object
-	laptop.getStudent().add(s); //for many to many, laptop gets student from the arraylist of student object
-	laptop2.getStudent().add(s);
-	laptop.getStudent().add(s2);
-	laptop2.getStudent().add(s2); 
+	//Adding that list into student setLaptopList
+	Student student = new Student();
+	student.createStudent("rameen",100,1l,laptops);
+//	student.updateStudent(8l,"sana",99);
+//	student.deleteStudent(10l);
+//	student = student.getStudent(5l);
 	
-	s.setName("sana");
-	s.setMarks(79);
-	s2.setName("maria");
-	s2.setMarks(69);
-//	s.setLap(laptop); //for one to one, student gets laptop object
-	s.getLap().add(laptop); //for one to many and also for many to many, student gets laptop from the arraylist of laptop objects
-	s.getLap().add(laptop2);
-	s2.getLap().add(laptop);
-	s2.getLap().add(laptop2);
+//	Laptop laptop = new Laptop();
+//	laptop.createLaptop(2019, "Mac");
 	
-	Configuration config = new Configuration().configure("mapping.cfg.xml").addAnnotatedClass(Student.class).addAnnotatedClass(Laptop.class);
-	SessionFactory sf = config.buildSessionFactory();
-	Session session = sf.openSession();
-	Transaction tx = session.beginTransaction();
-	session.save(s);
-	session.save(s2);
-	session.save(laptop);
-	session.save(laptop2);
-	tx.commit();
 	}
 }
